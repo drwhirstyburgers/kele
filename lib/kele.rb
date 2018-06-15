@@ -33,4 +33,15 @@ class Kele
       @message_page = JSON.parse(response.body)
     end
   end
+
+  def create_message(sender, recipient_id, token = nil, subject, message)
+    response = self.class.post("/messages", headers: { "authorization" => @auth_token }, body: {
+      "sender":sender,
+      "recipient_id":recipient_id,
+      "token":token,
+      "subject": subject,
+      "stripped-text": message
+    })
+    puts "Your message has been sent!" if response.success?
+  end
 end
